@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}Recherche dans Shamela{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-10">
+  <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Recherche dans Shamela</h1>
+
+  <!-- Search form -->
+  <form method="get" class="flex gap-3 mb-8">
+    <input type="text" name="q" value="{{ query }}" placeholder="Rechercher dans la bibliothèque…"
+      class="flex-1 px-5 py-3 rounded-xl border border-gray-200 dark:border-slate-600 dark:bg-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm" dir="auto" />
+    <button type="submit" class="px-6 py-3 rounded-xl bg-primary-600 text-white text-sm font-medium hover:bg-primary-700 transition-colors">
+      Rechercher
+    </button>
+  </form>
+
+  {% if query %}
+  <!-- Local results -->
+  {% if local_books %}
+  <div class="mb-6">
+    <h2 class="text-lg font-semibold text-gray-800 dark:text-white mb-4 flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-green-500"></span>
+      {{ local_books|length }} livre(s) dans l'index local
+    </h2>
+    <div class="space-y-3">
+      {% for book in local_books %}
+      <a href="{% url 'search:book_detail' book.shamela_id %}"
+        class="flex items-center gap-4 p-4 bg-white dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-slate-700 hover:border-primary-200 dark:hover:border-primary-700 hover:shadow-sm transition-all group">
+        <div class="w-10 h-10 rounded-xl bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+          </svg>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="font-medium text-gray-900 dark:text-white text-sm group-hover:text-primary-600 transition-colors" dir="auto">{{ book.title }}</p>
+          {% if book.author %}<p class="text-xs text-gray-500 dark:text-gray-400" dir="auto">{{ book.author }}</p>{% endif %}
+        </div>
+        <svg class="w-4 h-4 text-gray-400 group-hover:text-primary-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </a>
+      {% endfor %}
+    </div>
+
+    <!-- IA CTA -->
+    <div class="mt-6 p-4 bg-primary-50 dark:bg-primary-900/20 rounded-xl border border-primary-100 dark:border-primary-800">
+      <p class="text-sm text-primary-700 dark:text-primary-300 mb-3">
+        💡 Voulez-vous une réponse IA sur "<strong>{{ query }}</strong>" ?
+      </p>
+      <a href="{% url 'ai:search' %}?query={{ query|urlencode }}"
+        class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 transition-colors">
+        ✨ Interroger l'IA
+      </a>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Shamela.ws live results -->
+  {% if shamela_results %}
+  <div>
+    <h2 class="text-lg font-semibold text-gray-800 dark:text-white mb-4 flex items-center gap-2">
+      <svg class="w-4 h-4 text-accent-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/>
+      </svg>
+      {{ shamela_results|length }} résultat(s) sur shamela.ws (live)
+    </h2>
+    <div class="space-y-3">
+      {% for res in shamela_results %}
+      <div class="flex items-center justify-between p-4 bg-white dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-slate-700">
+        <div>
+          <p class="font-medium text-gray-900 dark:text-white text-sm" dir="auto">{{ res.title }}</p>
+          {% if res.author %}<p class="text-xs text-gray-500 dark:text-gray-400">{{ res.author }}</p>{% endif %}
+        </div>
+        <a href="{{ res.url }}" target="_blank" rel="noopener"
+          class="ml-3 flex-shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium text-accent-600 border border-accent-200 hover:bg-accent-50 dark:border-accent-800 dark:hover:bg-accent-900/20 transition-colors">
+          Voir →
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  {% if not local_books and not shamela_results and not error %}
+  <div class="text-center py-12 text-gray-400 dark:text-gray-500">
+    <p class="text-lg mb-2">Aucun résultat pour "{{ query }}"</p>
+    <p class="text-sm">Essayez avec l'IA pour une réponse contextuelle.</p>
+    <a href="{% url 'ai:search' %}?query={{ query|urlencode }}" class="inline-block mt-4 px-6 py-3 rounded-xl text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 transition-colors">
+      ✨ Essayer avec l'IA
+    </a>
+  </div>
+  {% endif %}
+
+  {% if error %}
+  <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 rounded-xl p-4 text-red-600 dark:text-red-400 text-sm">
+    {{ error }}
+  </div>
+  {% endif %}
+
+  {% else %}
+  <div class="text-center py-12 text-gray-400">
+    <p>Saisissez un terme de recherche pour commencer.</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

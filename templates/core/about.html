@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load i18n core_tags %}
+
+{% block title %}À Propos{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-16">
+  <div class="text-center mb-12">
+    <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">À Propos de Rissala</h1>
+    <p class="text-gray-500 dark:text-gray-400 text-lg max-w-2xl mx-auto">Une plateforme de recherche avancée dédiée à l'exploration du patrimoine islamique classique par l'intelligence artificielle.</p>
+  </div>
+
+  <div class="space-y-8">
+    <!-- Mission -->
+    <div class="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-sm border border-gray-100 dark:border-slate-700">
+      <div class="flex items-start gap-4">
+        <div class="w-12 h-12 rounded-xl bg-primary-100 flex items-center justify-center flex-shrink-0">
+          <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Notre Mission</h2>
+          <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+            Rissala permet d'explorer une vaste bibliothèque numérique de textes classiques via une interface intuitive et intelligente.
+            Notre objectif est de faciliter l'accès, la recherche et la compréhension approfondie du patrimoine littéraire et doctrinal, en mettant la technologie au service du savoir.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Technology -->
+    <div class="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-sm border border-gray-100 dark:border-slate-700">
+      <div class="flex items-start gap-4">
+        <div class="w-12 h-12 rounded-xl bg-accent-100 flex items-center justify-center flex-shrink-0">
+          <svg class="w-6 h-6 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Technologies Utilisées</h2>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+            {% for tech in "Django 5.0,Python 3.12,OpenAI GPT-4o,Ollama (local),Recherche Sémantique,Modèles de Langage,Traitement de Données,Expertise Digitale,Tailwind CSS"|split:"," %}
+            <div class="flex items-center gap-2 px-3 py-2 bg-gray-50 dark:bg-slate-700 rounded-lg">
+              <span class="w-2 h-2 rounded-full bg-primary-500"></span>
+              <span class="text-sm text-gray-700 dark:text-gray-300">{{ tech }}</span>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-2xl p-8">
+      <div class="flex items-start gap-4">
+        <div class="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center flex-shrink-0">
+          <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-xl font-semibold text-amber-800 dark:text-amber-300 mb-3">⚠️ Disclaimer Important</h2>
+          <ul class="space-y-2 text-amber-700 dark:text-amber-400 text-sm leading-relaxed">
+            <li>• Les réponses IA sont générées à titre d'assistance et peuvent être sujettes à interprétation.</li>
+            <li>• <strong>Rissala</strong> est un outil de recherche académique et pédagogique.</li>
+            <li>• L'interprétation finale des textes reste du ressort de l'expertise humaine et spécialisée.</li>
+            <li>• Ce projet vise à valoriser le patrimoine par des outils digitaux innovants.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sources -->
+    <div class="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-sm border border-gray-100 dark:border-slate-700">
+      <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Sources &amp; Crédits</h2>
+      <ul class="space-y-3 text-sm text-gray-600 dark:text-gray-400">
+        <li class="flex items-center gap-2">
+          <span class="text-green-500">✓</span>
+          <span class="font-medium">Rissala.net</span> — Plateforme d'étude du patrimoine
+        </li>
+        <li class="flex items-center gap-2">
+          <span class="text-green-500">✓</span>
+          <a href="https://openai.com" target="_blank" class="text-primary-600 hover:underline font-medium">OpenAI</a> — Modèles de langage GPT-4o-mini
+        </li>
+        <li class="flex items-center gap-2">
+          <span class="text-green-500">✓</span>
+          <a href="https://ollama.com" target="_blank" class="text-primary-600 hover:underline font-medium">Ollama</a> — IA locale (ALLaM, SILMA)
+        </li>
+        <li class="flex items-center gap-2">
+          <span class="text-green-500">✓</span>
+          <a href="https://www.djangoproject.com" target="_blank" class="text-primary-600 hover:underline font-medium">Django</a> — Framework web Python
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

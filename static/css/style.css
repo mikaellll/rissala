@@ -1,0 +1,6 @@
+/* Place custom CSS here if needed. Tailwind covers most cases. */
+.primary-gradient-text {
+    background: linear-gradient(135deg, #16a34a, #0891b2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

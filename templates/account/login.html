@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load account socialaccount %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans "Connexion" %}{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto px-4 py-16">
+  <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-700 overflow-hidden">
+    <div class="px-8 pt-8 pb-6 text-center">
+      <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-600 to-accent-600 flex items-center justify-center mx-auto mb-4 shadow-lg">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+        </svg>
+      </div>
+      <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{% trans "Connexion" %}</h1>
+      <p class="text-gray-500 dark:text-gray-400 text-sm mt-2">Accédez à votre historique et personnalisez votre expérience.</p>
+    </div>
+
+    <div class="px-8 pb-8">
+      <form class="login space-y-4" method="POST" action="{% url 'account_login' %}">
+        {% csrf_token %}
+        {{ form|crispy }}
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        
+        <button class="primaryAction w-full py-3.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-primary-600 to-accent-600 hover:from-primary-700 hover:to-accent-700 shadow-lg hover:shadow-primary-500/30 transition-all transform hover:-translate-y-0.5" type="submit">
+          {% trans "Se connecter" %}
+        </button>
+      </form>
+
+      <div class="mt-8 pt-6 border-t border-gray-100 dark:border-slate-700 text-center">
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+          {% blocktrans %}Pas encore de compte ?{% endblocktrans %}
+          <a href="{{ signup_url }}" class="text-primary-600 font-semibold hover:underline">{% trans "Inscrivez-vous" %}</a>
+        </p>
+        <p class="mt-2">
+          <a class="text-xs text-gray-400 hover:text-primary-600 transition-colors" href="{% url 'account_reset_password' %}">{% trans "Mot de passe oublié ?" %}</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
