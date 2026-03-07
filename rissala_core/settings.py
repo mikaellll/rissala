@@ -57,7 +57,7 @@ MIDDLEWARE = [
     "allauth.account.middleware.AccountMiddleware",
 ]
 
-ROOT_URLCONF = "shamela_ia_wrapper.urls"
+ROOT_URLCONF = "rissala_core.urls"
 
 TEMPLATES = [
     {
@@ -76,7 +76,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "shamela_ia_wrapper.wsgi.application"
+WSGI_APPLICATION = "rissala_core.wsgi.application"
 
 # ---------------------------------------------------------------------------
 # Database  (SQLite default → Postgres via env var DATABASE_URL)
