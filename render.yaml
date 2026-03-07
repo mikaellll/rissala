@@ -4,7 +4,6 @@ services:
     env: python
     buildCommand: "./build.sh"
     startCommand: "gunicorn rissala_core.wsgi"
-    releaseCommand: "python manage.py migrate"
     envVars:
       - key: PYTHON_VERSION
         value: 3.10.14
