@@ -2,6 +2,7 @@ services:
   - type: web
     name: rissala
     env: python
+    plan: free
     buildCommand: "./build.sh"
     startCommand: "gunicorn rissala_core.wsgi"
     envVars:
